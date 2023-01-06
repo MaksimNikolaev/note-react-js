@@ -6,9 +6,10 @@ export const Form = () => {
   const [value, setValue] = useState('');
   const alert = useContext(AlertContext);
   const firebase = useContext(FirebaseContext);
+  const { hide}  = useContext(AlertContext)
 
   const submitHandler = (e) => {
-    e.preventDefault();
+    e.preventDefault();    
     if (value.trim()) {
       firebase.addNote(value.trim())
         .then(() => alert.show('Заметка была создана', 'success'))
@@ -16,9 +17,9 @@ export const Form = () => {
       alert.show('Заметка была создана', 'success')
       setValue('')
     } else {
-      alert.show('Введите название заметки', 'success')
+      alert.show('Введите название заметки', 'warning')
     }
-    
+    setTimeout(() => hide(), 2000)
   }
 
   return (
