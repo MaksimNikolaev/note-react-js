@@ -1,18 +1,17 @@
-import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {TransitionGroup, CSSTransition} from 'react-transition-group'
-import { AlertContext } from '../context/alert/alertContext';
-import { FirebaseContext } from '../context/firebase/firebaseContext';
+import { hide, show } from '../features/alert/alertSlice';
+import { removeNote } from '../features/notes/notesSlice';
 
-export const Notes = ({notes}) => {
-  const firebase = useContext(FirebaseContext);
-  const alert = useContext(AlertContext);
-  const { hide}  = useContext(AlertContext)
+export const Notes = () => {
+  const dispatch = useDispatch();
+  const notes = useSelector((state) => state.notes.notes)
 
-  const handleRemoveNote = (id) => {
-    firebase.removeNote(id)
-      .then(() => alert.show('Заметка была удалена', 'success'))
-      .catch(() => alert.show('Что-то пошло не так', 'danger'))
-    setTimeout(() => hide(), 2000)
+  const handleRemoveNote = (id) => { 
+    dispatch(removeNote(id)).unwrap()
+      .then(() => dispatch(show({text:'Заметка была удалена', type:'success'})) )
+      .catch(() => dispatch(show({text:'Что-то пошло не так',  type:'danger'})));
+    setTimeout(() => dispatch(hide()), 2000)
   }
 
   return (

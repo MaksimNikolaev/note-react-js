@@ -1,24 +1,26 @@
-import { Fragment, useContext, useEffect } from "react"
+import { Fragment, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { Form } from "../components/Form"
 import { Loader } from "../components/Loader"
 import { Notes } from "../components/Notes"
-import { FirebaseContext } from "../context/firebase/firebaseContext"
+import { getNotes } from "../features/notes/notesSlice"
 
 export const Home = () => {
-  const { loading, notes, fetchNotes} = useContext(FirebaseContext);
+  const dispatch = useDispatch();
+  const status = useSelector((state) => state.notes.status)  
 
   useEffect(() => {
-    fetchNotes()
+    dispatch(getNotes())
     //eslint-disable-next-line
-  }, [])
+  }, [dispatch])
 
   return (
-    <Fragment>
+    <Fragment>      
       <Form />
       <hr/>
-      {loading 
+      {(status === 'loading') 
       ? <Loader/>
-      : <Notes notes={notes}/>
+      : <Notes/>
       }      
     </Fragment>
   )

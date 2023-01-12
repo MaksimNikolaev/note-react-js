@@ -1,25 +1,23 @@
-import { useContext, useState } from "react"
-import { AlertContext } from "../context/alert/alertContext";
-import { FirebaseContext } from "../context/firebase/firebaseContext";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { hide, show } from "../features/alert/alertSlice";
+import { addNote } from "../features/notes/notesSlice";
 
 export const Form = () => {
   const [value, setValue] = useState('');
-  const alert = useContext(AlertContext);
-  const firebase = useContext(FirebaseContext);
-  const { hide}  = useContext(AlertContext)
+  const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();    
     if (value.trim()) {
-      firebase.addNote(value.trim())
-        .then(() => alert.show('Заметка была создана', 'success'))
-        .catch(() => alert.show('Что-то пошло не так', 'danger'))
-      alert.show('Заметка была создана', 'success')
+      dispatch(addNote(value.trim())).unwrap()
+        .then(() => dispatch(show({text:'Заметка была создана', type:'success'})))  
+        .catch(() => dispatch(show({text:'Что-то пошло не так', type:'danger'})))
       setValue('')
     } else {
-      alert.show('Введите название заметки', 'warning')
+      dispatch(show({text:'Введите название заметки', type:'warning'}))
     }
-    setTimeout(() => hide(), 2000)
+    setTimeout(() =>  dispatch(hide()), 2000)
   }
 
   return (

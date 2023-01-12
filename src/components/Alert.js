@@ -1,14 +1,16 @@
-import { useContext, useRef } from "react"
-import { AlertContext } from "../context/alert/alertContext"
+import { useRef } from "react"
 import {CSSTransition} from 'react-transition-group'
+import { useSelector } from "react-redux"
 
 export const Alert = () => {
-  const {alert} = useContext(AlertContext)
   const nodeRef = useRef(null);
+  const visible = useSelector(state => state.alert.visible);
+  const type = useSelector(state => state.alert.type);
+  const text = useSelector(state => state.alert.text);
 
   return (
     <CSSTransition
-      in={alert.visible}
+      in={visible}
       timeout={{
         enter: 500,
         exit: 350
@@ -18,8 +20,8 @@ export const Alert = () => {
       mountOnEnter
       unmountOnExit
     >
-      <div className={`alert alert-${alert.type || 'warning'} alert-dismissible`} ref={nodeRef}>
-        <strong>Внимание!</strong>&nbsp; {alert.text}
+      <div className={`alert alert-${type || 'warning'} alert-dismissible`} ref={nodeRef}>
+        <strong>Внимание!</strong>&nbsp; {text}
       </div>
     </CSSTransition>    
   )
