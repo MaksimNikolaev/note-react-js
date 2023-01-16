@@ -49,6 +49,24 @@ export const removeNote = createAsyncThunk('notes/removeNote', async(id, {reject
   }    
 })
 
+export const editNote = createAsyncThunk('notes/editNote', async({id, title}, {rejectWithValue }) => {
+  const note = {
+    title, 
+    date: new Date().toJSON()
+  }
+  try {
+    await axios.put(`${url}/notes/${id}.json`, note);    
+    const payload = {
+      ...note,
+      id,
+    }
+    return payload
+  }
+  catch (e) {
+    return rejectWithValue('Что-то пошло не так')
+  }    
+})
+
 export const notesSlice = createSlice({
   name: 'notes',
   initialState,
@@ -82,6 +100,22 @@ export const notesSlice = createSlice({
       state.status = 'init';
     },
     [removeNote.rejected]: (state) => {
+      state.status = 'error';
+    },
+    [editNote.fulfilled]: (state, action) => {
+      state.notes.forEach(note => {
+        if (note.id === action.payload.id) {
+          note.date = action.payload.date  
+          note.title = action.payload.title
+          note.id = action.payload.id   
+        }
+      })
+      state.status = 'success';
+    },
+    [editNote.pending]: (state) => {
+      state.status = 'init';
+    },
+    [editNote.rejected]: (state) => {
       state.status = 'error';
     },
   }

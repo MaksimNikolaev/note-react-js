@@ -22,15 +22,17 @@ export const Form = () => {
 
   return (
     <form onSubmit={submitHandler}>
-      <div className="form-group">
-        <input 
-          type='text'
+      <div className="input-group mb-3">
+        <input
+          type="text"
           className="form-control"
           placeholder="Введите название заметки"
           value={value}
           onChange={e => setValue(e.target.value)}
-          >          
-        </input>
+          />
+        <button
+          className="btn btn-outline-primary"
+          type="submit" id="button-addon2">Добавить</button>
       </div>
     </form>
   )

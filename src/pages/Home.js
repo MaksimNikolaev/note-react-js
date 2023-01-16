@@ -7,21 +7,22 @@ import { getNotes } from "../features/notes/notesSlice"
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.notes.status)  
+  const status = useSelector((state) => state.notes.status)
+
 
   useEffect(() => {
     dispatch(getNotes())
     //eslint-disable-next-line
-  }, [dispatch])
+  }, [])
 
   return (
     <Fragment>      
       <Form />
       <hr/>
       {(status === 'loading') 
-      ? <Loader/>
-      : <Notes/>
-      }      
+        ? <Loader/>
+        : <Notes/>
+      }     
     </Fragment>
   )
 }

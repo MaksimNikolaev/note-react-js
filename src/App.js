@@ -4,7 +4,8 @@ import { Navbar } from './components/Navbar';
 import { About } from './pages/About';
 import { Home } from './pages/Home';
 
-function App() {
+function App() {  
+
   return (
         <BrowserRouter>
           <Navbar/>
@@ -15,6 +16,7 @@ function App() {
               <Route path='/about' element={<About/>}></Route>
             </Routes>
           </div>
+          
         </BrowserRouter>    
   );
 }
