@@ -71,53 +71,54 @@ export const notesSlice = createSlice({
   name: 'notes',
   initialState,
   reducers: {},
-  extraReducers: {
-    [getNotes.fulfilled]: (state, action) =>{
-      state.notes = action.payload;
-      state.status = 'success';
-    },
-    [getNotes.pending]: (state) =>{ 
-      state.status = 'loading';
-    },
-    [getNotes.rejected]: (state) => {
-      state.status = 'error';
-    },
-    [addNote.fulfilled]: (state, action) => {
-      state.notes.push(action.payload);
-      state.status = 'success';
-    },
-    [addNote.pending]: (state) => {
-      state.status = 'init';
-    },
-    [addNote.rejected]: (state) => {
-      state.status = 'error';
-    },
-    [removeNote.fulfilled]: (state, action) => {
-      state.notes = state.notes.filter(note => note.id !== action.payload)
-      state.status = 'success';
-    },
-    [removeNote.pending]: (state) => {
-      state.status = 'init';
-    },
-    [removeNote.rejected]: (state) => {
-      state.status = 'error';
-    },
-    [editNote.fulfilled]: (state, action) => {
-      state.notes.forEach(note => {
-        if (note.id === action.payload.id) {
-          note.date = action.payload.date  
-          note.title = action.payload.title
-          note.id = action.payload.id   
-        }
+  extraReducers: (builder) => {
+    builder
+      .addCase (getNotes.fulfilled, (state, action) => {
+        state.notes = action.payload;
+        state.status = 'success';
       })
-      state.status = 'success';
-    },
-    [editNote.pending]: (state) => {
-      state.status = 'init';
-    },
-    [editNote.rejected]: (state) => {
-      state.status = 'error';
-    },
+      .addCase (getNotes.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase (getNotes.rejected, (state) => {
+        state.status = 'error';
+      })
+      .addCase (addNote.fulfilled, (state, action) => {
+        state.notes.push(action.payload);
+        state.status = 'success';
+      })
+      .addCase (addNote.pending, (state) => {
+        state.status = 'init';
+      })
+      .addCase (addNote.rejected, (state) => {
+        state.status = 'error';
+      })
+      .addCase (removeNote.fulfilled, (state, action) => {
+        state.notes = state.notes.filter(note => note.id !== action.payload)
+        state.status = 'success';
+      })
+      .addCase (removeNote.pending, (state) => {
+        state.status = 'init';
+      })
+      .addCase (removeNote.rejected, (state) => {
+        state.status = 'error';
+      })
+      .addCase (editNote.fulfilled, (state, action) => {
+        state.notes.forEach(note => {
+          if (note.id === action.payload.id) {
+            note.date = action.payload.date  
+            note.title = action.payload.title
+            note.id = action.payload.id   
+          }
+        })
+        state.status = 'success';
+      })
+      .addCase (editNote.pending, (state) => {
+        state.status = 'init';
+      })
+      .addCase (editNote.rejected, (state) => {
+        state.status = 'error';
+      })
   }
 })
 
