@@ -67,10 +67,18 @@ export const editNote = createAsyncThunk('notes/editNote', async({id, title}, {r
   }    
 })
 
+
 export const notesSlice = createSlice({
   name: 'notes',
   initialState,
-  reducers: {},
+  reducers: {
+    sortInAscending(state, action) {
+      state.notes.sort((a, b) => a[action.payload] > b[action.payload] ? 1 : -1)
+    },
+    sortInDescending(state, action) {
+      state.notes.sort((a, b) => a[action.payload] > b[action.payload] ? -1 : 1)
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase (getNotes.fulfilled, (state, action) => {
@@ -122,5 +130,5 @@ export const notesSlice = createSlice({
   }
 })
 
-//const { onNoteRemove } = notesSlice.actions
+export const { sortInAscending, sortInDescending } = notesSlice.actions
 export default notesSlice.reducer

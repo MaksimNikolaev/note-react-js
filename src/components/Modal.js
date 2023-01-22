@@ -43,7 +43,7 @@ export const Modal = ({ hideModal, value, setValue, note }) => {
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
-              onClick={hide}
+              onClick={hideModal}
             ></button>
           </div>
           <div className="modal-body">
@@ -68,7 +68,7 @@ export const Modal = ({ hideModal, value, setValue, note }) => {
               type="button"
               className="btn btn-secondary"
               data-bs-dismiss="modal"
-              onClick={hide}
+              onClick={hideModal}
             >
               Закрыть
             </button>

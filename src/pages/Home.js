@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Form } from "../components/Form"
 import { Loader } from "../components/Loader"
 import { Notes } from "../components/Notes"
+import { Sort } from "../components/Sort"
 import { getNotes } from "../features/notes/notesSlice"
 
 export const Home = () => {
@@ -18,6 +19,7 @@ export const Home = () => {
   return (
     <Fragment>      
       <Form />
+      <Sort />
       <hr/>
       {(status === 'loading') 
         ? <Loader/>
