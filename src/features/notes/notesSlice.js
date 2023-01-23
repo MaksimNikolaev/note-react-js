@@ -4,6 +4,7 @@ import { url } from "../../utils/constants";
 
 const initialState = {
   notes: [],
+  filterNotesArr: null,
   status: 'init' | 'loading' | 'error' | 'success',
 }
 
@@ -73,10 +74,17 @@ export const notesSlice = createSlice({
   initialState,
   reducers: {
     sortInAscending(state, action) {
-      state.notes.sort((a, b) => a[action.payload] > b[action.payload] ? 1 : -1)
+      state.filterNotesArr
+      ? state.filterNotesArr.sort((a, b) => a[action.payload] > b[action.payload] ? 1 : -1)
+      : state.notes.sort((a, b) => a[action.payload] > b[action.payload] ? 1 : -1)
     },
     sortInDescending(state, action) {
-      state.notes.sort((a, b) => a[action.payload] > b[action.payload] ? -1 : 1)
+      state.filterNotesArr
+      ? state.filterNotesArr.sort((a, b) => a[action.payload] > b[action.payload] ? -1 : 1)
+      : state.notes.sort((a, b) => a[action.payload] > b[action.payload] ? -1 : 1)
+    },
+    filterNotes(state, action) {
+      state.filterNotesArr = state.notes.filter(note => note.title.toLowerCase().includes(action.payload.toLowerCase()))
     }
   },
   extraReducers: (builder) => {
@@ -130,5 +138,5 @@ export const notesSlice = createSlice({
   }
 })
 
-export const { sortInAscending, sortInDescending } = notesSlice.actions
+export const { sortInAscending, sortInDescending, filterNotes } = notesSlice.actions
 export default notesSlice.reducer

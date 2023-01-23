@@ -1,5 +1,6 @@
 import { Fragment, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { Filter } from "../components/Filter"
 import { Form } from "../components/Form"
 import { Loader } from "../components/Loader"
 import { Notes } from "../components/Notes"
@@ -19,7 +20,10 @@ export const Home = () => {
   return (
     <Fragment>      
       <Form />
-      <Sort />
+      <div className="group-sort-filter">
+        <Sort />
+        <Filter />
+      </div>      
       <hr/>
       {(status === 'loading') 
         ? <Loader/>

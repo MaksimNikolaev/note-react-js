@@ -55,6 +55,17 @@ code {
   }
 }
 
+.group-sort-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
 @keyframes note {
   0% {
     transform: translateX(0);
