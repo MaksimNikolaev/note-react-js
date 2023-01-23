@@ -128,6 +128,13 @@ export const notesSlice = createSlice({
             note.id = action.payload.id   
           }
         })
+        state.filterNotesArr?.forEach(note => {
+          if (note.id === action.payload.id) {
+            note.date = action.payload.date  
+            note.title = action.payload.title
+            note.id = action.payload.id   
+          }
+        })
         state.status = 'success';
       })
       .addCase (editNote.pending, (state) => {
