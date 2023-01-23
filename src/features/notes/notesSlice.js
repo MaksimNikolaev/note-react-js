@@ -105,6 +105,7 @@ export const notesSlice = createSlice({
       })
       .addCase (addNote.pending, (state) => {
         state.status = 'init';
+        state.filterNotesArr = null;
       })
       .addCase (addNote.rejected, (state) => {
         state.status = 'error';
